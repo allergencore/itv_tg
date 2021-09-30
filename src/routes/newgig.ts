@@ -12,7 +12,7 @@ function setup(bot: Bot<SessionContext>, r : Router<SessionContext>) {
 
     r.route("newgig/p-name", async (ctx) => {
             await ctx.reply("Type in gig name");
-            ctx.session.step = "name";
+            ctx.session.step = "newgig/name";
     });
 
     r.route("newgig/name", (ctx) => {

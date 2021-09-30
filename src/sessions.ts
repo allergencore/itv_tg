@@ -12,6 +12,7 @@ interface I18nFlavor extends Context {
 }
 
 type SessionContext = Context & SessionFlavor<SessionData> & I18nFlavor;
+// type SessionContext = Context & SessionFlavor<SessionData> & MinimalMiddlewareContext;
 
 /* function setupSession(bot: Bot<SessionContext>) {
     // GCP Firestore init

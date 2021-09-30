@@ -11,6 +11,11 @@ function setupRouter(bot: Bot<SessionContext>) {
     setupNewgig(bot, r);
     setupNewtour(bot, r);
 
+    r.otherwise(async (ctx) => {
+        console.error("Router dont have this route: " + ctx.session.step);
+        await ctx.reply("EГГOГ");
+    });
+
     bot.use(r.middleware());
 }
 

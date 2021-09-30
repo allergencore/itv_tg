@@ -10,13 +10,12 @@ function setup(bot: Bot<SessionContext>, r: Router<SessionContext>) {
         r.middleware()(ctx, async () => {});
     });
 
-    r.route("p-name", async (ctx) => {
+    r.route("newtour/p-name", async (ctx) => {
             await ctx.reply("Type in tour name");
-            ctx.session.step = "name";
-            // r.middleware()(ctx, async () => {});
+            ctx.session.step = "newtour/name";
     });
 
-    r.route("name", (ctx) => {
+    r.route("newtour/name", (ctx) => {
         // console.log(ctx.message?.text || "no text specified");
         console.log("newtour");
         ctx.api.sendMessage(process.env.admin_id ?? ctx.chat?.id ?? 0, ctx.message?.text ?? "no text specified");

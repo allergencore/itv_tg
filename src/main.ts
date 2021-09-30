@@ -6,7 +6,7 @@ import { setupSession, SessionContext } from "./sessions";
 console.log("ITV tg bot init...");
 
 // Bot init
-const bot = new Bot<SessionContext>(process.env.token || "");
+const bot = new Bot<SessionContext>(process.env.token ?? "");
 
 console.log("Enabling sessions...");
 setupSession(bot);
