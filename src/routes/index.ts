@@ -1,5 +1,6 @@
 import { Router } from "@grammyjs/router";
 import { Bot } from "grammy";
+import { isDirect } from "../filter";
 import { SessionContext } from "../sessions";
 import { setup as setupNewgig } from "./newgig";
 import { setup as setupNewtour } from "./newtour";
@@ -16,7 +17,7 @@ function setupRouter(bot: Bot<SessionContext>) {
         await ctx.reply("EГГOГ");
     });
 
-    bot.use(r.middleware());
+    bot.filter(isDirect).use(r.middleware());
 }
 
 

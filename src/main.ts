@@ -4,9 +4,12 @@ import { setupRouter } from "./routes";
 import { setupSession, SessionContext } from "./sessions";
 
 console.log("ITV tg bot init...");
+process.env.BUILD_ID ??= "DEV";
+process.env.COMMIT_SHA ??= "local";
+console.log(`Build "${process.env.BUILD_ID}" from commit "${process.env.COMMIT_SHA}"`);
 
-// Bot init
-const bot = new Bot<SessionContext>(process.env.token ?? "");
+
+const bot = new Bot<SessionContext>(process.env.tg_token ?? "");
 
 console.log("Enabling sessions...");
 setupSession(bot);

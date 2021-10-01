@@ -2,4 +2,6 @@ runtime: nodejs16
 service: tg
 
 env_variables:
-  token: ""
+  tg_token: "<TELEGRAMTOKEN>"
+  admin_id: "<TELEGRAMADMIN>"
+  public_id: "<TELEGRAMPUBLIC>"
