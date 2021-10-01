@@ -7,7 +7,7 @@ steps:
     yarn run build && echo "---=== Transpiling to JS complete ===---";
     rm -r ./src && echo "---=== Typescript sources removed ===---";
     sed -i "s/<TELEGRAMTOKEN>/$$tg_token/;s/<TELEGRAMADMIN>/$$admin_id/;s/<TELEGRAMPUBLIC>/$$public_id/" app.yaml;
-    printf "" >> app.yaml;
+    printf "  BUILD_ID: $BUILD_ID\n  COMMIT_SHA: $COMMIT_SHA" >> app.yaml;
     printf "$$firestore" > firestore.json;
     echo "---=== Secure contents added ===---";
     tar -czf ../tmp.tgz . && echo "---=== Artifact Compressed ===---";
