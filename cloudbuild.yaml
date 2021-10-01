@@ -3,15 +3,16 @@ steps:
   entrypoint: bash
   args:
   - -c
-  - yarn install && echo "---=== Dependency installation complete ===---";
-    yarn run build && echo "---=== Transpiling to JS complete ===---";
-    rm -r ./src && echo "---=== Typescript sources removed ===---";
-    sed -i "s/<TELEGRAMTOKEN>/$$tg_token/;s/<TELEGRAMADMIN>/$$admin_id/;s/<TELEGRAMPUBLIC>/$$public_id/" app.yaml;
-    printf "  BUILD_ID: $BUILD_ID\n  COMMIT_SHA: $COMMIT_SHA" >> app.yaml;
-    printf "$$firestore" > firestore.json;
-    echo "---=== Secure contents added ===---";
-    tar -czf ../tmp.tgz . && echo "---=== Artifact Compressed ===---";
-    mv ../tmp.tgz $BUILD_ID.tgz
+  - >-
+      yarn install && echo "---=== Dependency installation complete ===---";
+      yarn run build && echo "---=== Transpiling to JS complete ===---";
+      rm -r ./src && echo "---=== Typescript sources removed ===---";
+      sed -i "s/<TELEGRAMTOKEN>/$$tg_token/;s/<TELEGRAMADMIN>/$$admin_id/;s/<TELEGRAMPUBLIC>/$$public_id/" app.yaml;
+      printf "  BUILD_ID: $BUILD_ID\n  COMMIT_SHA: $COMMIT_SHA" >> app.yaml;
+      printf "$$firestore" > firestore.json;
+      echo "---=== Secure contents added ===---";
+      tar -czf ../tmp.tgz . && echo "---=== Artifact Compressed ===---";
+      mv ../tmp.tgz $BUILD_ID.tgz
   secretEnv: ['tg_token', 'admin_id', 'firestore']
 availableSecrets:
   secretManager:
@@ -25,5 +26,5 @@ availableSecrets:
     env: firestore
 artifacts:
   objects:
-    location: gs://into-the-void-325704_cloudbuild/build
+    location: gs://${PROJECT_ID}_cloudbuild/build
     paths: ['$BUILD_ID.tgz']
