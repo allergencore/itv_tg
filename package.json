@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node js/main.js",
     "build": "tsc",
-    "dev_start": "node -r dotenv/config js/main.js",
+    "lstart": "node -r dotenv/config js/main.js",
     "dev": "tsc -w & nodemon -r dotenv/config js/main.js"
   },
   "dependencies": {

@@ -1,0 +1,29 @@
+steps:
+- name: node
+  entrypoint: bash
+  args:
+  - -c
+  - yarn install && echo "---=== Dependency installation complete ===---";
+    yarn run build && echo "---=== Transpiling to JS complete ===---";
+    rm -r ./src && echo "---=== Typescript sources removed ===---";
+    sed -i "s/<TELEGRAMTOKEN>/$$tg_token/;s/<TELEGRAMADMIN>/$$admin_id/;s/<TELEGRAMPUBLIC>/$$public_id/" app.yaml;
+    printf "" >> app.yaml;
+    printf "$$firestore" > firestore.json;
+    echo "---=== Secure contents added ===---";
+    tar -czf ../tmp.tgz . && echo "---=== Artifact Compressed ===---";
+    mv ../tmp.tgz $BUILD_ID.tgz
+  secretEnv: ['tg_token', 'admin_id', 'firestore']
+availableSecrets:
+  secretManager:
+  - versionName: projects/$PROJECT_ID/secrets/tg_token/versions/latest
+    env: tg_token
+  - versionName: projects/$PROJECT_ID/secrets/tg_admin/versions/latest
+    env: admin_id
+  # - versionName: projects/$PROJECT_ID/secrets/tg_public/versions/latest
+  #   env: public_id
+  - versionName: projects/$PROJECT_ID/secrets/firestore/versions/latest
+    env: firestore
+artifacts:
+  objects:
+    location: gs://into-the-void-325704_cloudbuild/build
+    paths: ['$BUILD_ID.tgz']
