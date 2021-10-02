@@ -6,12 +6,12 @@ steps:
   - >-
       yarn install && echo "---=== Dependency installation complete ===---";
       yarn run build && echo "---=== Transpiling to JS complete ===---";
-      rm -r ./src && echo "---=== Typescript sources removed ===---";
+      yarn install --production && echo "---=== Dev deps removed from ./node_modules ===---";
       sed -i "s/<TELEGRAMTOKEN>/$$tg_token/;s/<TELEGRAMADMIN>/$$admin_id/;s/<TELEGRAMPUBLIC>/$$public_id/" app.yaml;
       printf "  BUILD_ID: $BUILD_ID\n  COMMIT_SHA: $COMMIT_SHA" >> app.yaml;
       printf "$$firestore" > firestore.json;
       echo "---=== Secure contents added ===---";
-      tar -czf ../tmp.tgz . && echo "---=== Artifact Compressed ===---";
+      tar --exclude .git --exclude src -czf ../tmp.tgz . && echo "---=== Artifact Compressed ===---";
       mv ../tmp.tgz $BUILD_ID.tgz
   secretEnv: ['tg_token', 'admin_id', 'firestore']
 availableSecrets:
