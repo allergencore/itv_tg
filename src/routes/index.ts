@@ -8,13 +8,19 @@ import { setup as setupNewtour } from "./newtour";
 
 function setupRouter(bot: Bot<SessionContext>) {
     const r = new Router<SessionContext>((ctx) => ctx.session.step);
+/*     r.route("main", (ctx) => {
+        // main route for handling commands, etc
+        console.log("NOP");
+        
+    }); */
 
     setupNewgig(bot, r);
     setupNewtour(bot, r);
 
     r.otherwise(async (ctx) => {
         console.error("Router dont have this route: " + ctx.session.step);
-        await ctx.reply("EГГOГ");
+        // await ctx.reply("Internal error");
+        ctx.session.step = "main";
     });
 
     bot.filter(isDirect).use(r.middleware());

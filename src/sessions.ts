@@ -28,11 +28,24 @@ type SessionContext = Context & SessionFlavor<SessionData> & I18nFlavor;
 } */
 
 function setupSession(bot: Bot<SessionContext>) {
-    bot.use(session({
-        initial(): SessionData {
-            return { step: "" }
+    switch (process.env.session) {
+        case "firestore":
+            console.log("Using firestore production sessions...");
+            throw new Error("Code isnt written");
+        break;
+        case "lfs":
+            console.log("Using firestore emulator sessions...");
+        break;    
+        case "memory":
+        default:
+            console.log("Using in-memory sessions...");
+            bot.use(session({
+                initial(): SessionData {
+                    return { step: "main" }
+                }
+            }));
+        break;
         }
-    }));
 }
 
 export { setupSession, SessionContext };
